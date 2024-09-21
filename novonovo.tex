@@ -1,0 +1,37 @@
+\documentclass{scrartcl}
+\usepackage{scrlayer-scrpage}
+\usepackage{graphicx}
+\usepackage{tabularray}
+\usepackage{cmbright}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{width=6cm,compat=newest}
+\renewcommand*\pagemark{{\usekomafont{pagenumber}\thepage}}
+\addtokomafont{pageheadfoot}{\upshape}
+\clearpairofpagestyles
+\ihead{\includegraphics[width=1cm]{uminho.png}{Introdução à Física Experimental}}
+\ohead{Trabalho Prático \textnumero 1}
+\cfoot*{\pagemark}
+
+\author{
+	Pinto,Grech Maria\\
+	\and
+	Almeida, Paulina Diana\\
+	\and
+	Domingues, Marco
+}
+\date{}
+\title{\includegraphics[scale=0.7]{images/ruler.png}}
+
+
+\begin{document}
+	\maketitle
+	
+	\thispagestyle{headings}
+	
+	
+		
+	\input{table.tex}
+	\vspace{60 mm}
+	\input{respostas.tex}
+\end{document}
