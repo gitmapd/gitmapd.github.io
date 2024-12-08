@@ -1,0 +1,84 @@
+\documentclass[a4paper]{article}
+\usepackage[12pt]{extsizes}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+%\usepackage{lscape}
+\DeclareMathOperator{\arccot}{arccot}
+\begin{document}
+	$$\textbf{Primitivas Imediatas \qquad Primitivas Quase Imediatas}$$
+	\[\int_{}^{} x^{\alpha} dx = \frac{x^{\alpha+1}}{\alpha +1} + C \qquad \int_{}^{} f(x)^{\alpha}f'(x) dx = \frac{f(x)^{\alpha+1}}{\alpha +1} + C\]
+	\[\int_{}^{} e^x dx = e^x +C \qquad \int_{}^{}e^{f(x)} f'(x) dx = e^{f(x)} +C\]
+	\[\int_{}^{} a^x\ln{a}dx = a^x +C \qquad \int_{}^{} a^{f(x)}f'(x)\ln{a}dx = a^{f(x)} +C \]
+	\[\int_{}^{} \frac{1}{x} dx = \ln |x| +C \qquad \int_{}^{}\frac{f'(x)}{f(x)}dx = \ln{|f(x)|}+C\]
+	\[\int_{}^{} \frac{1}{x\ln{a}} dx = \log_{a} |x| +C \qquad \int_{}^{}\frac{f'(x)}{f(x)\ln{a}}dx = \log_{a}{|f(x)|}+C\]
+	\[\int_{}^{} \sin{[f(x)]}f'(x)dx = -\cos{[f(x)]} + C \qquad \int_{}^{} \cos{[f(x)]}f'(x)dx = \sin{[f(x)]} + C\]
+	\[\int_{}^{} \frac{1}{cos^2{x}} dx = \tan{x} +C\qquad \int_{}^{}\frac{f'(x)}{cos^2{[f(x)]}} dx = \tan{[f(x)]} +C\]
+	$$\textbf{Funções Elementares \qquad Funções Compostas}$$
+    \[(x^{\alpha})' = \alpha x^{\alpha-1} \qquad [f(x)^{\alpha}]= \alpha f(x)^{\alpha-1}f'(x)\]
+    \[(e^x)' = e^x \qquad [e^{f(x)}]' = e^x f'(x)\]
+    \[(a^x)' = a^x\ln{a}\qquad  [a^{f(x)}]'= a^{f(x)} f'(x) \ln{a}\]
+    \[(\ln{x})' = \frac{1}{x} \qquad [\ln{f(x)}]'=\frac{f'(x)}{f(x)}\]
+    \[(\log_{a} x)'= \frac{1}{x\ln{a}} \qquad [\log_{a} f(x)]'= \frac{f'(x)}{f(x)\ln{a}}\]
+    \[(\tan{x})' = \frac{1}{cos^2{x}} \qquad [\tan{f(x)}]'\frac{f'(x)}{cos^2{[f(x)]}} \]
+    \[(\tanh{x})' = \frac{1}{cosh^2{x}} \qquad [\tanh{f(x)}]'\frac{f'(x)}{cos^2h{[f(x)]}} \]
+	$$\textbf{Primitivação por Partes}$$
+	\[\int_{}^{} f'g =  dx  = \int_{}^{} f(x)dx ,landscape+ \int_{}^{} g(x)dx \]
+    \textbf{A função $\cos(x)$ é estritamente decrescente em $[0,\pi]$ e estritamente crescente em $[\pi,2\pi]$}
+    \[f(x)=\cos(x): \mathbb{R} \rightarrow [-1,1]\qquad  g(x)=f(x)_{|[0,\pi]}\rightarrow [-1,1]\]
+    \textbf{A função $\arccos(x)$ é contínua e estritamente decrescente. É derivável em $]-1,1[$}
+    \centering,landscape
+    \[f(x)=\arccos(x): [-1,1] \rightarrow [0,\pi]\]
+    \[\arccos'(x): -\frac{1}{\sqrt{1-x^2}} (-1<x<1)\]
+    \textbf{A função $\sin(x)$ é estritamente crescente em $[-\frac{\pi}{2},\frac{\pi}{2}]$ e estritamente decrescente em $[\frac{\pi}{2},\frac{3\pi}{2}]$}
+    \[f(x)=\sin(x): \mathbb{R} \rightarrow [-1,1]\qquad  g(x)=f(x)_{|[-\frac{\pi}{2},\frac{\pi}{2}]}\rightarrow [-1,1]\]
+    \textbf{A função $\arcsin(x)$ é contínua e estritamente crescente. É derivável em $]-1,1[$}
+    \centering
+    \[f(x)=\arcsin(x): [-1,1] \rightarrow [-\frac{\pi}{2},\frac{\pi}{2}]\]
+    \[\arcsin'(x): \frac{1}{\sqrt{1-x^2}} (-1<x<1)\]
+    \textbf{A função $\tan(x)$ é ímpar, estritamente crescente em $]-\frac{\pi}{2},\frac{\pi}{2}[$}
+    \centering
+    \[f(x)=\tan(x): \mathbb{R} \setminus \{\frac{\pi}{2} +k\pi| k \in \mathbb{Z}\} \qquad  g(x)=f(x)_{|]-\frac{\pi}{2},\frac{\pi}{2}[}\rightarrow \mathbb{R}\]
+    \textbf{A função $\arctan(x)$ é derivável e estritamente crescente}
+    \[f(x)=\arctan(x): \mathbb{R} \rightarrow  ]-\frac{\pi}{2},\frac{\pi}{2}[\]
+    \[\arctan'(x): \frac{1}{1+x^2} (x \in \mathbb{R})\]
+    \centering
+    \[f(x)=\arccot(x):]0,\pi[ \rightarrow \mathbb{R}\]
+    \textbf{A função $\cot(x)$ é ímpar, estritamente decrescente em $]0,\pi[$}
+    \[f(x)=\cot(x): \mathbb{R} \setminus \{k\pi | k \in \mathbb{Z}\} \qquad  g(x)=f(x)_{|]0,\pi[}\rightarrow \mathbb{R}\]
+    \centering
+  \[f(x)=\arccot(x):]0,\pi[ \rightarrow \mathbb{R}\]
+     \centering
+  \includegraphics[scale=0.50]{images/taylor1.png}
+  \includegraphics[scale=0.50]{images/taylor2.png}
+  \includegraphics[scale=0.50]{images/taylor3.png}
+  \includegraphics[scale=0.50]{images/taylor4.png}
+  \includegraphics[scale=0.50]{images/taylor5.png}
+  \includegraphics[scale=0.31]{images/taylor6.png}
+  
+  \textbf{Ratio test if there’s factorials or powers and it’s not a rational function}
+  
+  \textbf{Root I do less often only if everything is raised to k or n}
+  
+\includegraphics[scale=0.40]{images/improprio1.png}
+\includegraphics[scale=0.40]{images/improprio2.png}
+\includegraphics[scale=0.40]{images/improprio3.png}
+\includegraphics[scale=0.40]{images/improprio4.png}
+\includegraphics[scale=0.40]{images/improprio5.png}
+\includegraphics[scale=0.40]{images/imprdiv.png}
+\includegraphics[scale=0.40]{images/geo1.png}
+\includegraphics[scale=0.40]{images/geo2.png}
+\includegraphics[scale=0.40]{images/harmonica.png}
+\includegraphics[scale=0.40]{images/leibniz.png}
+\includegraphics[scale=0.40]{images/serietaylor1.png}
+\includegraphics[scale=0.40]{images/serietaylor2.png}
+\includegraphics[scale=0.40]{images/raiopower.png}
+\includegraphics[scale=0.40]{images/serie1.jpg}
+\includegraphics[scale=0.40]{images/serie2.jpg}
+\includegraphics[scale=0.40]{images/serie3.jpg}
+%\includegraphics[scale=0.50]{images/ress1.png}
+\includegraphics[scale=0.40]{images/ress2.png}
+\includegraphics[scale=0.40]{images/ress3.png}
+\includegraphics[scale=0.40]{images/ress4.png}
+\includegraphics[scale=0.40]{images/ress5.png}
+\end{document}
