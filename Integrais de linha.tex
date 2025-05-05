@@ -1,0 +1,789 @@
+% !TeX program = lualatex
+\documentclass{scrartcl}
+\usepackage{scrlayer-scrpage}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{physics}
+\usepackage{xhfill}
+\usepackage{tkz-euclide}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns, intersections}
+\expandafter\let\expandafter\originald\csname\encodingdefault\string\d\endcsname
+\DeclareRobustCommand*\d
+{\ifmmode\mathop{}\!\mathrm{d}\else\expandafter\originald\fi}
+\newcommand{\uvec}[1]{\boldsymbol{\hat{\textbf{#1}}}}
+
+\newcommand\norms[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\uveci}{{\bm{\hat{\textnormal{\bfseries\i}}}}}
+\newcommand{\uvecj}{{\bm{\hat{\textnormal{\bfseries\j}}}}}
+\DeclareRobustCommand{\uvec}[1]{{%
+		\ifcsname uvec#1\endcsname
+		\csname uvec#1\endcsname
+		\else
+		\bm{\hat{\mathbf{#1}}}%
+		\fi
+}}
+%\setkomafont{section}{<formatting>}% changes the formatrting of headlines
+%\KOMAoptions{%
+	%	headsepline=2pt,
+	%	footsepline=1pt
+	%}
+%\ihead{\includegraphics[width=1cm]{uminho.png}{Cálculo Vetorial}}
+%\rohead{2024/2025}
+%\rofoot{\pagemark}
+%\cfoot{Marco Domingues (A109564) }
+
+\begin{document}
+	
+\textbf{The line integral of $\vec{F}$ along $C$ is}
+
+\text{$\int_{C}^{} \vec{F} \cdot \, \d \vec{r} = \int_{a}^{b}
+\vec{F}(\vec{r}(t)) \cdot \vec{r}^{\prime} \, \d t$}
+
+\[\vec{F}(\vec{r}(t)) = \vec{F}(x(t),y(t),z(t)) \]
+
+\[\int_{C}^{} \vec{F} \cdot \, \d \vec{r} = \int_{C}^{} \vec{F} \cdot \,\vec{T} \, \d s  \qquad \vec{T}(t) = \frac{\vec{r}^{\prime}}{||\vec{r}^{\prime}||}\]
+
+\[\int_{C}^{} \vec{F} \cdot \, \d \vec{r} = \int_{C}^{} \vec{F} \cdot \,\vec{T} \, \d s \]
+
+\[=\int_{a}^{b}\vec{F} (\vec{r}(t)) \cdot \frac{\vec{r}^{\prime}(t)}{||\vec{r}^{\prime}(t)||} ||\vec{r}^{\prime}(t)||\, \d t\]
+
+\[=\int_{a}^{b}\vec{F} (\vec{r}(t)) \cdot \vec{r}^{\prime}(t)\, \d t \]
+
+\section*{Example 1}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y,z)=8x^2yz\vec{i}+5z\vec{j}-4xy\vec{k}$ and $C$ is the curve given by $\vec{r}(t)=t\vec{i}+t^2\vec{j}+t^3\vec{k}$ , $0 \leq t \leq1$.}
+
+\[\vec{F}(\vec{r}(t))= 8t^2(t^2)(t^3)\vec{i}+5t^3\vec{j}-4t(t^2)\vec{k}=8t^7\vec{i}+5t^3\vec{j}-4t^3\vec{k}\]
+
+\[\vec{r}^{\prime}(t)=\vec{i}+2t\vec{j}+3t^2\vec{k}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =(8t^7+5t^3-4t^3) \cdot (1+2t+3t^2) = 8t^7+10t^4-12t^5\]
+
+\[=\int_{0}^{1} 8t^7+10t^4-12t^5\, \d t =\left[t^8+2t^5-2t^6\right]_{0}^{1}=1\]
+
+\section*{Example 2}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y,z)=xz\vec{i}-yz\vec{k}$ and $C$ is the line segment from $(-1,2,0)$ to $(3,0,1)$.}
+
+\[\vec{r}(t)=(1-t)\langle-1,2,0\rangle +t\langle 3,0,1\rangle=\langle4t-1,-2t+2,t\rangle\]
+
+\[\vec{r}^{\prime}(t)=\langle 4,-2,1\rangle\]
+
+\[\vec{F}(\vec{r}(t))= (4t-1)(t)\vec{i}-(-2t+2)(t)\vec{k}=(4t^2-t)\vec{i}-(-2t^2+2t)\vec{k}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =4(4t^2-t)-(-2t^2+2t) = 18t^2 -6t\]
+
+\[=\int_{0}^{1} 18t^2-6t\, \d t =\left[6t^3-3t^2\right]_{0}^{1}=3\]
+
+\textbf{Given the vector field $\vec{F}(x,y,z)= P\vec{i}+Q\vec{j}+R\vec{k}$ and the curve $C$ parameterized by $\vec{r}=x(t)\vec{i}+y(t)\vec{j}+z(t)\vec{k}$, $a\leq t \leq b$}
+
+\[\int_{C}^{} \vec{F} \cdot \, \d \vec{r} = \int_{a}^{b} \left(P\vec{i}+Q\vec{j}+R\vec{k}\right) \cdot \left(x^{\prime}\vec{i}+y^{\prime}\vec{j}+z^{\prime}\vec{k}\right) \, \d t\]
+
+\[= \int_{a}^{b} Px^{\prime}+Qy^{\prime}+Rz^{\prime}  \, \d t\]
+
+\[= \int_{a}^{b} Px^{\prime} \, \d t +\int_{a}^{b} Qy^{\prime} \, \d t+ \int_{a}^{b} Rz^{\prime}  \, \d t\]
+
+\[= \int_{C}^{} P \, \d x +\int_{C}^{} Q\, \d y + \int_{C}^{} R \, \d z\]
+
+\[= \int_{C}^{} P \, \d x +  Q\, \d y + R \, \d z\]
+
+\[\int_{-C}^{} \vec{F} \cdot \, \d \vec{r} = - \int_{C}^{} \vec{F} \cdot \, \d \vec{r}\]
+
+
+\section*{1.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=y^2\vec{i}+(3x-6y)\vec{j}$ and $C$ is the line segment from $(3,7)$ to $(0,12)$.}
+
+\[\vec{r}(t)=(1-t)\langle 3,7\rangle +t\langle 0,12\rangle=\langle 3-3t,7+5t\rangle\]
+
+\[\vec{r}^{\prime}(t)=\langle -3,5 \rangle\]
+
+\[\vec{F}(\vec{r}(t))= (7+5t)^2\vec{i}+(3(3-3t)-6(7+5t))\vec{j}=(7+5t)^2\vec{i}+(-33-39t)\vec{j}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =-3(7+5t)^2 - 5(33+39t)\]
+
+\[=\int_{0}^{1} -3(7+5t)^2 - 5(33+39t) \, \d t =\left[- \frac{\left(7+5t\right)^3}{5}-165t-\frac{195t^2}{2}\right]_{0}^{1}\]
+
+\[= -\frac{12}{5} - 165 -\frac{195}{2} - \left(-\frac{1}{5}7^3\right) =-\frac{1079}{2} \]
+
+\section*{2.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=(x+y)\vec{i}+(1-x)\vec{j}$ and $C$ is the portion	of $\frac{x^2}{4}+\frac{y^2}{9}=1$ that is in the 4th quadrant with the counter clockwise rotation.}
+
+\[\vec{r}(t)=\langle 2\cos{t},3\sin{t}\rangle\]
+
+\[\vec{r}^{\prime}(t)=\langle -2\sin{t},3\cos{t}\rangle\]
+
+\[\vec{F}(\vec{r}(t))= (2\cos{t}+3\sin{t})\vec{i}+(1-2\cos{t})\vec{j}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =(2\cos{t}+3\sin{t})(-2\sin{t}) + (1-2\cos{t})(3\cos{t})=-2\sin{2t}+3\cos{t}-6\]
+
+\[=\int_{\frac{3\pi}{2}}^{2\pi} -2\sin{2t}+3\cos{t}-6 \, \d t =\left[\cos{2t}+\sin{t}-6t\right]_{\frac{3\pi}{2}}^{2\pi} = 5 - 3\pi\]
+
+\section*{3.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=y^2\vec{i}+(x^2-4)\vec{j}$ and $C$ is the portion	of $y=(x-1)^2$from $x=0$ to $x=3$.}
+
+\[\vec{r}(t)=\langle t,(t-1)^2\rangle\]
+
+\[\vec{r}^{\prime}(t)=\langle 1,2(t-1)\rangle\]
+
+\[\vec{F}(\vec{r}(t))= (t-1)^4\vec{i}+(t^2-4)\vec{j}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =(t-1)^4 + 2(t-1)(t^2-4)=(t-1)^4 + 2t^3-2t^2-8t+8\]
+
+\[=\int_{0}^{3} (t-1)^4 + 2(t-1)(t^2-4) \, \d t =\left[\frac{1}{5}(t-1)^5 + \frac{1}{2}t^4-\frac{2}{3}t^3-4t^2+8t\right]_{0}^{3} = \frac{171}{10}\]
+
+\section*{4.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y,z)=e^{2x}\vec{i}+z(y+1)\vec{j}+z^3\vec{k}$ and $C$ is given by $\vec{r}(t)=t^3\vec{i}+(1-3t)\vec{j}+e^{t}\vec{k}$ for $0 \leq t \leq 2$	.}
+
+\[\vec{r}^{\prime}(t)= 3t^2\vec{i}-3\vec{j}+e^t\vec{k}\]
+
+\[\vec{F}(\vec{r}(t))= e^{2t^{3}}\vec{i}+e^{t}(2-3t)\vec{j}+e^{3t}\vec{k}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =e^{2t^{3}}	(3t^2)+e^{t}(2-3t)(-3)+e^{3t}(e^t) =3t^2e^{2t^{3}}-3e^t(2-3t)+e^{4t}\]
+
+\[=\int_{0}^{2} 3t^2e^{2t^{3}}-3e^t(2-3t)+e^{4t} \, \d t =\left[\frac{1}{2}e^{2t^{3}}-3e^t(5-3t)+\frac{1}{4}e^{4t}\right]_{0}^{2} = \frac{57}{4}+3e^2+\frac{1}{4}e^8+\frac{1}{2}e^{16}\]
+
+\section*{5.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=3y\vec{i}+(x^2-y)\vec{j}$}
+\textbf{and $C$ is the upper half of the circle centered at the origin of radius $1$ with counter clockwise rotation and the portion of $y=x^2-1$ from $x=-1$ to $x=1$. See the example below.}
+
+\includegraphics[scale=0.4]{images/16.4LineInt5.png}
+
+\[C_1: \vec{r}(t)= \langle \cos{t},\sin{t}\rangle \qquad 0 \leq t \leq \pi\]
+
+\[C_1: \vec{r}^{\prime}(t)= \langle -\sin{t}, \cos{t}\rangle\]
+
+\[C_1: \vec{F}(\vec{r}(t))= 3\sin{t}\vec{i}+(\cos^2{t}-\sin{t})\vec{j}\]
+
+\[C_1: \vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) = -3\sin^2{t}+\cos ^3{t}-\cos{t}\sin{t}\]
+
+\[= -\frac{3}{2}(1-\cos{2t})+\cos{t}(1-\sin^2{t})-\cos{t}\sin{t}\]
+
+\[= -\frac{3}{2}(1-\cos{2t})+\cos{t}(1-\sin^2{t})-\frac{1}{2}\sin{2t}\]
+
+\[= \int_{0}^{\pi}-\frac{3}{2}(1-\cos{2t})+\cos{t}-\cos{t}\sin^2{t}-\frac{1}{2}\sin{2t} \, \d t\]
+
+\[=\left[-\frac{3}{2}(t-\frac{1}{2}\sin{2t})+\sin{t}-\frac{1}{3}\sin^3{t}+\frac{1}{4}\cos{2t}\right]_{0}^{\pi}=-\frac{3\pi}{2}\]
+
+\[\vec{r}^{\prime}(t)= 3t^2\vec{i}-3\vec{j}+e^t\vec{k}\]
+
+\[\vec{F}(\vec{r}(t))= e^{2t^{3}}\vec{i}+e^{t}(2-3t)\vec{j}+e^{3t}\vec{k}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =e^{2t^{3}}	(3t^2)+e^{t}(2-3t)(-3)+e^{3t}(e^t) =3t^2e^{2t^{3}}-3e^t(2-3t)+e^{4t}\]
+
+\[=\int_{0}^{2} 3t^2e^{2t^{3}}-3e^t(2-3t)+e^{4t} \, \d t =\left[\frac{1}{2}e^{2t^{3}}-3e^t(5-3t)+\frac{1}{4}e^{4t}\right]_{0}^{2} = \frac{57}{4}+3e^2+\frac{1}{4}e^8+\frac{1}{2}e^{16}\]
+
+\[C_2: \vec{r}(t)= \langle t,t^2-1\rangle \qquad -1 \leq t \leq 1\]
+
+\[C_2: \vec{r}^{\prime}(t)= \langle 1, 2t\rangle\]
+
+\[C_2: \vec{F}(\vec{r}(t))= 3(t^2-1)\vec{i}+\vec{j}\]
+
+\[C_2: \vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) = 3(t^2-1)+2t\]
+
+\[=\int_{-1}^{1} 3(t^2-1)+2t \, \d t = \left[t^3-3t+t^2\right]_{-1}^{1}=-4\]
+
+\section*{6.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=(x+y)\vec{i}+(1-x)\vec{j}$ and $C$ is the portion	of $\frac{x^2}{4}+\frac{y^2}{9}=1$ that is in the 4th quadrant with the counter clockwise rotation.}
+
+\[\vec{r}(t)=\langle t,(t-1)^2\rangle\]
+
+\[\vec{r}^{\prime}(t)=\langle 1,2(t-1)\rangle\]
+
+\[\vec{F}(\vec{r}(t))= (t-1)^4\vec{i}+(t^2-4)\vec{j}\]
+
+\[\vec{F}(\vec{r}(t))\cdot \vec{r}{\prime}(t) =(t-1)^4 + 2(t-1)(t^2-4)=(t-1)^4 + 2t^3-2t^2-8t+8\]
+
+\[=\int_{0}^{3} (t-1)^4 + 2(t-1)(t^2-4) \, \d t =\left[\frac{1}{5}(t-1)^5 + \frac{1}{2}t^4-\frac{2}{3}t^3-4t^2+8t\right]_{0}^{3} = \frac{171}{10}\]
+
+
+\section*{7.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=(6x-2y)\vec{i}+x^2\vec{j}$ for each of the following curves.}
+
+\subsection*{a)}
+\textbf{$C$ is the line segment from $(6,-3)$ to $(0,0)$ followed by the line segment from $(0,0)$ to $(6,3)$.}
+
+\subsection*{b)}
+\textbf{$C$ is the line segment from $(6,-3)$ to $(6,3)$.}
+
+\section*{8.}
+
+\textbf{Evaluate $\int_{C}^{} \vec{F} \cdot \, \d \vec{r}$ where $\vec{F}(x,y)=3\vec{i}+(xy-2x)\vec{j}$ for each of the following curves.}
+
+\subsection*{a)}
+\textbf{$C$ is the upper half of the circle centered at the origin of radius $4$ with counter clockwise rotation.}
+
+\subsection*{b)}
+\textbf{$C$	is the upper half of the circle centered at the origin of radius $4$ with clockwise rotation.}
+Evaluate  
+∫
+C
+
+→
+F
+⋅
+d
+→
+r
+where 
+→
+F
+(
+x
+,
+y
+)
+=
+(
+x
++
+y
+)
+→
+i
++
+(
+1
+−
+x
+)
+→
+j
+and 
+C
+is the portion of 
+x
+2
+4
++
+y
+2
+9
+=
+1
+that is in the 4th quadrant with the counter clockwise rotation. 
+C
+
+→
+F
+⋅
+d
+→
+r
+=
+−
+∫
+C
+
+→
+F
+⋅
+d
+→
+r
+→
+r
+(
+t
+)
+=
+x
+(
+t
+)
+→
+i
++
+y
+(
+t
+)
+→
+j
++
+z
+(
+t
+)
+→
+k
+, 
+a
+≤
+t
+≤
+b
+the line integral is,
+
+∫
+C
+
+→
+F
+⋅
+d
+→
+r
+=
+∫
+b
+a
+(
+P
+→
+i
++
+Q
+→
+j
++
+R
+→
+k
+)
+⋅
+(
+x
+′
+→
+i
++
+y
+′
+→
+j
++
+z
+′
+→
+k
+)
+d
+t
+=
+∫
+b
+a
+P
+x
+′
++
+Q
+y
+′
++
+R
+z
+′
+d
+t
+=
+∫
+b
+a
+P
+x
+′
+d
+t
++
+∫
+b
+aGiven the vector field 
+→
+F
+(
+x
+,
+y
+,
+z
+)
+=
+P
+→
+i
++
+Q
+→
+j
++
+R
+→
+k
+and the curve 
+C
+parameterized by 
+→
+r
+(
+t
+)
+=
+x
+(
+t
+)
+→
+i
++
+y
+(
+t
+)
+→
+j
++
+z
+(
+t
+)
+→
+k
+, 
+a
+≤
+t
+≤
+b
+the line integral is,
+
+∫
+C
+
+→
+F
+⋅
+d
+→
+r
+=
+∫
+b
+a
+(
+P
+→
+i
++
+Q
+→
+j
++
+R
+→
+k
+)
+⋅
+(
+x
+′
+→
+i
++
+y
+′
+→
+j
++
+z
+′
+→
+k
+)
+d
+t
+=
+∫
+b
+a
+P
+x
+′
++
+Q
+y
+′
++
+R
+z
+′
+d
+t
+=
+∫
+b
+a
+P
+x
+′
+d
+t
++
+∫
+b
+a
+Q
+y
+′
+d
+t
++
+∫
+b
+a
+R
+z
+′
+d
+t
+=
+∫
+C
+
+P
+d
+x
++
+∫
+C
+
+Q
+d
+y
++
+∫
+C
+
+R
+d
+z
+=
+∫
+C
+
+P
+d
+x
++
+Q
+d
+y
++
+
+Q
+y
+′
+d
+t
++
+∫
+b
+a
+R
+z
+′
+d
+t
+=
+∫
+C
+
+P
+d
+x
++
+∫
+C
+
+Q
+d
+y
++
+∫
+C
+
+R
+d
+z
+=
+∫
+C
+
+P
+d
+x
++
+Q
+d
+y
++
+
+
+	%\includegraphics[scale=0.5]{images/CalculoRec2020Q1.png}
+	
+	\[f(x)=\sqrt{{1+\sqrt{x}}}\]
+	
+	\[f'(x)=(1+(x)^{\frac{1}{2}})^{\frac{1}{2}}\]
+	\[= \frac{1}{2\sqrt{1+\sqrt{x}}} \cdot \frac{1}{2\sqrt{x}} = \frac{1}{4\sqrt{x}\sqrt{1+\sqrt{x}}}\]
+	
+	\[F(x)=\int_{0}^{\sin{x}}\frac{t^2}{t^2-1} \, \d t\]
+	
+	\[F'(x) = \frac{\sin^2{x}}{\sin^2{x}-1} \cdot \frac{\ d}{\d x} \sin{x} \]
+	
+	\[= - \frac{\sin^2{x}}{1-\sin^2{x} } \cdot \cos{x} \]
+	
+	\[= - \frac{\sin^2{x}}{\cos^{\cancel{2}}{x} } \cdot \cancel{\cos{x}} \]
+	
+	\[= - \frac{\sin^2{x}}{\cos{x}} \]
+	
+	
+	%\includegraphics[scale=0.5]{images/CalculoRec2020Q2.png}
+	
+	\[y-y_0 = m(x-x_0)\]
+	
+	\[m = \frac{\d y}{\d x} = \frac{\frac{\d y}{\d t}}{\frac{\d x}{\d t}} = \frac{3t^2}{2t}=\frac{3t}{2}\]
+	
+	\[m(t=5) = \frac{15}{2}\]
+	
+	\[x(5)=25 \qquad y(5)=125\]
+	
+	\[y-125=\frac{15}{2}(x-25) = y = 125 + \frac{15}{2}(x-25)\]
+	
+	\includegraphics[scale=0.5]{images/CalculoRec2020Q4.png}
+	
+	\[\int_{}^{}=\frac{x^3}{1+x^8} \, \d x = \frac{1}{4} \int_{}^{}=\frac{4x^3}{1+(x^4)^2} \, \d x = \frac{1}{4} \arctan{x^4}\]
+	
+	\[\int_{}^{}=(x+2)e^x \, \d x = \int_{}^{} xe^x+2e^x \, \d x \]
+	
+	\[= \int_{}^{} xe^x \, \d x + \int_{}^{} 2e^x \, \d x \]
+	
+	\[\int_{}^{} xe^x \, \d x = xe^x - e^x\]
+	
+	\[= \int_{}^{} xe^x \, \d x  + \int_{}^{} 2e^x \, \d x  = (x+1)e^x\]
+	
+	
+	\includegraphics[scale=0.5]{images/CalculoRec2020Q5.png}
+	
+	
+	\[\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}} \cos^2{\theta}\sin{\theta} \, \d \theta = \frac{1}{3}\left[-\cos^3{\theta}\right]_{-\frac{\pi}{2}}^{\frac{\pi}{2}} \int_{}^{}=\frac{4x^3}{1+(x^4)^2} \, \d x = 0\]
+	
+	\[\int_{1}^{3} \ln{x^3} \, \d x = 3 \int_{1}^{3} \ln{x} \, \d x \]
+	
+	\[f = \ln{x} \qquad g' = 1 \]
+	
+	\[f' = \frac{1}{x} \qquad g = x\]
+	
+	\[3 \int_{1}^{3} \ln{x} \, \d x = \left[x\ln{x}\right]_{1}^{3} - \int_{1}^{3} 1 = 3x\ln{x} - 3x = 9\ln{3}-6 \]
+	
+	
+	
+	\includegraphics[scale=0.4]{images/CalculoRec2020Q6.png}
+	
+	\[\dot y = 2 -x \qquad x(0)=1\]
+	
+	\[Y_c=c_1e^{-t}\]
+	
+	\[2-x = \Leftrightarrow x = 2\]
+	
+	\[c_1e^{0}+2 = 3 \Leftrightarrow c_1 = 1\]
+	
+	\[Y_c = e^{-t}+2\]
+	
+	
+	\includegraphics[scale=0.4]{images/CalculoRec2020Q8.png}
+	
+	\text{Método 1:}
+	
+	\[f(x) = \cos{x}\]
+	
+	\[f'(\pi)=\frac{f(x)-f(\pi)}{x-\pi}\]
+	
+	\[f'(\pi) = -\sin{\pi} = 0 \]
+	
+	
+	\text{Método 2:}
+	
+	\[\lim\limits_{x \to \pi} =\frac{1+\cos{x}}{x-\pi} = \frac{\frac{\d }{x} (1+\cos{x})}{\frac{\d }{x}(x-\pi)} = 0\]
+	
+	\textbf{$\ddot y + 9 y = \sin{(\pi t)}$}
+	
+	\[y_c(t)=c_1 \cos{(3t)} + c_2 \sin{(3t)}\]
+	
+	\[z=b \sin{(\pi t)}\]
+	
+	\[z'=\pi b \cos{(\pi t)}\]
+	
+	\[z''=-\pi^2 b \sin{(\pi t)}\]
+	
+	\[-\pi^2 b \sin{(\pi t)} + 9b t\sin{(\pi t)}=\sin{( \pi t)}\]
+	
+	\[b \cancel{\sin{(\pi t)}}(-\pi^2  + 9) =\cancel{\sin{(\pi t)}}\]
+	
+	\[b = \frac{1}{-\pi^2  + 9}\]
+	
+	\[y_c(t) + y_p(t) =c_1 \cos{(3t)} + c_2 \sin{(3t)} + \frac{1}{-\pi^2  + 9} \sin{(\pi t)}\]
+	
+	\textbf{$\ddot y + 9 y = \sin{(3t)}$}
+	
+	\text{Método 1:}
+	
+	\[y_c(t)=c_1 \cos{(3t)} + c_2 \sin{(3t)}\]
+	
+	\[z=b t\cos{(3t)}\]
+	
+	\[z'=-3bt\sin{(3t)}+b\cos{(3t)}\]
+	
+	\[z''=-6b\sin{(3t)}-9bt\cos{(3t)}\]
+	
+	\[-6b\sin{(3t)}-9bt\cos{(3t)} + 9b t\cos{(3t)}=\sin{(3t)}\]
+	
+	\[-6b\sin{(3t)}=\sin{(3t)}\]
+	
+	\[b = -\frac{1}{6}\]
+	
+	\[y_c(t) + y_p(t) =c_1 \cos{(3t)} + c_2 \sin{(3t)} - \frac{1}{6} t\cos{(3t)}\]
+	
+	\text{Método 2:}
+	
+	\[y_c(t)=c_1 \cos{(3t)} + c_2 \sin{(3t)}\]
+	
+	\[y_1(t)= \cos{(3t)} \qquad y_2(t)= \sin{(3t)}\]
+	
+	\[W = \begin{vmatrix}
+		\cos{(3t)} & \sin{(3t)}\\
+		-3\sin{(3t)} & 3\cos{(3t)}	
+	\end{vmatrix}=3\]
+	
+	\[Y_p(t)=-y_1 \int_{}^{} \frac{y_2 g(t)}{W(y_1,y_2)} \,\d t+ y_2 \int_{}^{} \frac{y_1 g(t)}{W(y_1,y_2)} \, \d t\]
+	
+	\[Y_p(t)=-\frac{\cos{(3t)}}{3} \int_{}^{}\sin{(3t)\sin{(3t)}} \, \d t+ \frac{\sin{(3t)}}{3} \int_{}^{}\cos{(3t)\sin{(3t)}} \, \d t\]
+	
+	\[sin^2{(3t)}= \frac{1-\cos{(6t)}}{2}\]
+	
+	\[Y_p(t)=-\frac{\cos{(3t)}}{3} \int_{}^{}\sin^2(3t) \, \d t+ \frac{\sin{(3t)}}{3} \cdot - \frac{\sin^2{(3t)}}{6} \]
+	
+	\[Y_p(t)=-\frac{\cos{(3t)}}{3} \int_{}^{}\frac{1}{2}-\frac{1}{2}\cos(6t) \, \d t+ \frac{\sin{(3t)}}{3} (-\frac{1}{12}+\frac{1}{12}\cos(6t))) \]
+	
+	%\[=-\frac{\cos{(3t)}}{3} \int_{}^{}\frac{1}{2}-\frac{1}{2}\cos(6t) \, \d t+ \frac{\sin^3{(3t)}}{18} \]
+	
+	%\[=-\frac{\cos{(3t)}}{3} (\frac{t}{2}-\frac{1}{12}\sin(6t))+ \frac{\sin^3{(3t)}}{18} \]
+	
+	
+\end{document}	
