@@ -47,17 +47,17 @@ def run_function(df, func_name, head_rows=5):
     elif func_name == "describe":
         print(tabulate(df.describe(), headers="keys", tablefmt="fancy_grid"))
         
-def criar_dataframe_de_txt(txt_files):
+def load_input_files(files):
     dataframes = {}
-    for filename in txt_files:
+    for filename in files:
         try:
-            df = pd.read_csv(
-            filename, 
-            sep='\s+', 
-            skiprows=1, 
-            names=['position_cm', 'force_N']
-            )
-            print(f"Dataframe is successfully created from: {filename}")
+            ext = Path(filename).suffix.lower()
+            if ext == ".txt":
+                df = pd.read_csv(filename, sep='\s+', skiprows=1, names=['position_cm', 'force_N'])
+            elif ext == ".csv":
+                df = pd.read_csv(filename)
+            else:
+                print(f"Ficheiro não suportado {filename}")
             dataframes[filename] = df
         except FileNotFoundError:
             print(f"File not found: {filename}")
@@ -67,7 +67,7 @@ def criar_dataframe_de_txt(txt_files):
             return None
     return dataframes
     
-dd=criar_dataframe_de_txt(txt_files)
+#dd=criar_dataframe_de_txt(txt_files)
 
 def salvar_dataframe_csv(dataframes, output_dir="convertidos"):
     os.makedirs(output_dir, exist_ok=True)
@@ -95,19 +95,12 @@ def load_csv(csv_files):
     return dataframes, force_data, position_data
 
 if args.input:
-    dfs,_,_ = load_csv(args.input)
+    dataframes = load_input_files(args.input)
     if args.print_df:
-        for name, df in dfs.items():
+        for name, df in dataframes.items():
             print_styled_dataframe(df, name, args.head)
     if args.save_csv:
-        salvar_dataframe_csv(dfs, args.output or "convertidos")
-
-if args.print_df:
-    for name, df in dd.items():
-        print_styled_dataframe(df, name,args.head)
-
-if args.save_csv:
-    salvar_dataframe_csv(dd)
+        salvar_dataframe_csv(dataframes, args.output or "convertidos")
     
 if args.load_csv:
     dfs, _, _ = load_csv([args.load_csv])  # wrap in list
