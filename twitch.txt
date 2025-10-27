@@ -1,0 +1,13 @@
+EkJX_3nNhI8
+
+Click is rock-solid and gives you full control. If you’re happy with the working version, I can help you build out:
+
+Twitch clip vs full video detection
+
+Quality presets and fallback logic
+
+Progress bars and download feedback
+
+Config files or environment variable support
+
+Just say the word — we can turn this into a robust CLI tool.
