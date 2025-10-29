@@ -1,0 +1,77 @@
+ClearAll[f, z]
+f[z_] := Exp[z]/(z^3 (z - 1))  (* Change this to any function *)
+
+ClassifyAndResidue[f_, z_] := Module[
+  {den, candidates, classify},
+  
+  den = Denominator[Together[f]];
+  candidates = z /. Solve[den == 0, z];
+  
+  classify[pt_] := Module[
+    {ser, order, res},
+    ser = Series[f, {z, pt, -1}];
+    
+    If[FreeQ[ser, Power[z - pt, n_ /; n < 0]],
+      Return[{pt, "Removable", None}]
+    ];
+    
+    order = Min[Cases[ser, (z - pt)^n_ -> n, ∞] /. Rule -> List];
+    
+    If[NumericQ[order] && order < 0,
+      res = Residue[f, {z, pt}];
+      Return[{pt, "Pole", -order, res}]
+    ];
+    
+    {pt, "Essential", None}
+  ];
+  
+  classify /@ candidates
+]
+
+ClassifyAndResidue[f, z]
+
+contour[t_] := 0 + 2 Exp[I t]  (* Circle centered at 0, radius 2 *)
+
+singularities = z /. Solve[Denominator[Together[f[z]]] == 0, z];
+
+ParametricPlot[
+  {Re[contour[t]], Im[contour[t]]}, {t, 0, 2 Pi},
+  PlotStyle -> Blue,
+  AxesLabel -> {"Re(z)", "Im(z)"},
+  PlotRange -> {{-3, 3}, {-3, 3}},
+  Epilog -> {
+    Red, PointSize[Large],
+    Point[{Re[#], Im[#]}] & /@ singularities,
+    Text[ToString[#], {Re[#] + 0.2, Im[#] + 0.2}] & /@ singularities
+  },
+  AspectRatio -> 1,
+  GridLines -> Automatic,
+  PlotLabel -> "Singularities and Contour"
+]
+
+Manipulate[
+  f[z_] := input;
+  ClassifyAndResidue[f, z],
+  {{input, Exp[z]/(z^3 (z - 1))}, ControlType -> InputField}
+]
+
+Manipulate[
+  f[z_] := input;
+  ClassifyAndResidue[f, z],
+  {{input, Exp[z]/(z^3 (z - 1))}, ControlType -> InputField}
+]
+
+ResidueSum[f_, z_, contourCenter_, contourRadius_] := Module[
+  {singularities, insidePoles, resSum},
+  singularities = z /. Solve[Denominator[Together[f[z]]] == 0, z];
+  insidePoles = Select[singularities, Norm[# - contourCenter] < contourRadius &];
+  resSum = Total[Residue[f[z], {z, #}] & /@ insidePoles];
+  2 Pi I * resSum
+]
+
+ResidueSum[f, z, 0, 2]  (* Example: contour centered at 0, radius 2 *)
+
+Animate[
+  Graphics[{Blue, PointSize[Large], Point[{Re[contour[t]], Im[contour[t]]}]}],
+  {t, 0, 2 Pi}
+]
